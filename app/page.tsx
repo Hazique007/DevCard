@@ -1,4 +1,5 @@
 import { HydrateClient } from "@/trpc/server";
+import { requireSession } from "@/lib/auth";
 import { prefetchDueCards, prefetchCardStats } from "@/src/features/cards/server/prefetch";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
@@ -8,6 +9,7 @@ import { ReviewSession } from "@/src/features/cards/ui/review_session";
 import { StatsDashboard } from "@/src/features/cards/ui/stats_dashboard";
 
 const HomePage = async () => {
+  await requireSession();
   await Promise.all([prefetchDueCards(), prefetchCardStats()]);
 
   return (

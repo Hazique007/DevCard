@@ -746,7 +746,9 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   name: 'name',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  passwordHash: 'passwordHash',
+  groqApiKey: 'groqApiKey'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

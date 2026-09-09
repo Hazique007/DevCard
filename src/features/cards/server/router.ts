@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import { calculateNextReview } from "@/lib/sm2";
 import { CreateCardSchema } from "../schema";
+import { getUserGroqKey } from "@/lib/groq-key";
 
 
 
@@ -99,12 +100,12 @@ Tags: ${card.tags.join(", ") || "none"}
 
 Answer questions about this card — clarify, give examples, explain edge cases, relate it to broader concepts. If asked something unrelated to this card's topic, gently steer back. Keep answers focused and use code blocks for code.`;
 
-
+const apiKey = await getUserGroqKey(ctx.userId);
 const groqRes= await fetch("https://api.groq.com/openai/v1/chat/completions",{
   method:"POST",
   headers:{
      "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
   },
   body:JSON.stringify({
     model:"openai/gpt-oss-120b",

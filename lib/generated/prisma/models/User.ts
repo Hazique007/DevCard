@@ -29,6 +29,8 @@ export type UserMinAggregateOutputType = {
   email: string | null
   name: string | null
   createdAt: Date | null
+  passwordHash: string | null
+  groqApiKey: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -36,6 +38,8 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   name: string | null
   createdAt: Date | null
+  passwordHash: string | null
+  groqApiKey: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -43,6 +47,8 @@ export type UserCountAggregateOutputType = {
   email: number
   name: number
   createdAt: number
+  passwordHash: number
+  groqApiKey: number
   _all: number
 }
 
@@ -52,6 +58,8 @@ export type UserMinAggregateInputType = {
   email?: true
   name?: true
   createdAt?: true
+  passwordHash?: true
+  groqApiKey?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -59,6 +67,8 @@ export type UserMaxAggregateInputType = {
   email?: true
   name?: true
   createdAt?: true
+  passwordHash?: true
+  groqApiKey?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -66,6 +76,8 @@ export type UserCountAggregateInputType = {
   email?: true
   name?: true
   createdAt?: true
+  passwordHash?: true
+  groqApiKey?: true
   _all?: true
 }
 
@@ -146,6 +158,8 @@ export type UserGroupByOutputType = {
   email: string
   name: string
   createdAt: Date
+  passwordHash: string | null
+  groqApiKey: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -174,6 +188,8 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
+  groqApiKey?: Prisma.StringNullableFilter<"User"> | string | null
   cards?: Prisma.CardListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   projectNotes?: Prisma.ProjectNoteListRelationFilter
@@ -184,6 +200,8 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  groqApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   cards?: Prisma.CardOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
   projectNotes?: Prisma.ProjectNoteOrderByRelationAggregateInput
@@ -197,6 +215,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
+  groqApiKey?: Prisma.StringNullableFilter<"User"> | string | null
   cards?: Prisma.CardListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   projectNotes?: Prisma.ProjectNoteListRelationFilter
@@ -207,6 +227,8 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  groqApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -220,6 +242,8 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  groqApiKey?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -227,6 +251,8 @@ export type UserCreateInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
   cards?: Prisma.CardCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteCreateNestedManyWithoutUserInput
@@ -237,6 +263,8 @@ export type UserUncheckedCreateInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
   cards?: Prisma.CardUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteUncheckedCreateNestedManyWithoutUserInput
@@ -247,6 +275,8 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUpdateManyWithoutUserNestedInput
@@ -257,6 +287,8 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUncheckedUpdateManyWithoutUserNestedInput
@@ -267,6 +299,8 @@ export type UserCreateManyInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -274,6 +308,8 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -281,6 +317,8 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -288,6 +326,8 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  groqApiKey?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -295,6 +335,8 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  groqApiKey?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -302,6 +344,8 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  groqApiKey?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -315,6 +359,10 @@ export type StringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type UserCreateNestedOneWithoutCardsInput = {
@@ -364,6 +412,8 @@ export type UserCreateWithoutCardsInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteCreateNestedManyWithoutUserInput
 }
@@ -373,6 +423,8 @@ export type UserUncheckedCreateWithoutCardsInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteUncheckedCreateNestedManyWithoutUserInput
 }
@@ -398,6 +450,8 @@ export type UserUpdateWithoutCardsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUpdateManyWithoutUserNestedInput
 }
@@ -407,6 +461,8 @@ export type UserUncheckedUpdateWithoutCardsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -416,6 +472,8 @@ export type UserCreateWithoutReviewsInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
   cards?: Prisma.CardCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteCreateNestedManyWithoutUserInput
 }
@@ -425,6 +483,8 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
   cards?: Prisma.CardUncheckedCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteUncheckedCreateNestedManyWithoutUserInput
 }
@@ -450,6 +510,8 @@ export type UserUpdateWithoutReviewsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUpdateManyWithoutUserNestedInput
 }
@@ -459,6 +521,8 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUncheckedUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -468,6 +532,8 @@ export type UserCreateWithoutProjectNotesInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
   cards?: Prisma.CardCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
 }
@@ -477,6 +543,8 @@ export type UserUncheckedCreateWithoutProjectNotesInput = {
   email: string
   name: string
   createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
   cards?: Prisma.CardUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
 }
@@ -502,6 +570,8 @@ export type UserUpdateWithoutProjectNotesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
 }
@@ -511,6 +581,8 @@ export type UserUncheckedUpdateWithoutProjectNotesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -569,6 +641,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   name?: boolean
   createdAt?: boolean
+  passwordHash?: boolean
+  groqApiKey?: boolean
   cards?: boolean | Prisma.User$cardsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   projectNotes?: boolean | Prisma.User$projectNotesArgs<ExtArgs>
@@ -580,6 +654,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   name?: boolean
   createdAt?: boolean
+  passwordHash?: boolean
+  groqApiKey?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -587,6 +663,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   name?: boolean
   createdAt?: boolean
+  passwordHash?: boolean
+  groqApiKey?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -594,9 +672,11 @@ export type UserSelectScalar = {
   email?: boolean
   name?: boolean
   createdAt?: boolean
+  passwordHash?: boolean
+  groqApiKey?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "passwordHash" | "groqApiKey", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cards?: boolean | Prisma.User$cardsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
@@ -618,6 +698,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     name: string
     createdAt: Date
+    passwordHash: string | null
+    groqApiKey: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1048,6 +1130,8 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly passwordHash: Prisma.FieldRef<"User", 'String'>
+  readonly groqApiKey: Prisma.FieldRef<"User", 'String'>
 }
     
 

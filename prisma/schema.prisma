@@ -12,6 +12,8 @@ model User {
   email     String   @unique
   name      String
   createdAt DateTime @default(now())
+  passwordHash String?
+  groqApiKey   String?  // encrypted, added in step 2
 
   cards        Card[]
   reviews      Review[]
