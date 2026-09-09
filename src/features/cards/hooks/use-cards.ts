@@ -21,49 +21,42 @@ export const useCardsList = (params: { search: string; category: string }) => {
   );
 };
 
+export const useCreateCard = () => {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
 
-export const useCreateCard =()=>{
-    const trpc = useTRPC()
- const queryClient = useQueryClient();
-
- return useMutation(
+  return useMutation(
     trpc.cards.create.mutationOptions({
-        onSuccess: () => {
+      onSuccess: () => {
         toast.success("Card added");
-        queryClient.invalidateQueries({ queryKey: trpc.cards.getMany.queryKey() });
-        queryClient.invalidateQueries({ queryKey: trpc.cards.getStats.queryKey() });
-        queryClient.invalidateQueries({ queryKey: trpc.cards.getDueCards.queryKey() });
+        queryClient.invalidateQueries(trpc.cards.getMany.pathFilter());
+        queryClient.invalidateQueries(trpc.cards.getStats.pathFilter());
+        queryClient.invalidateQueries(trpc.cards.getDueCards.pathFilter());
       },
-        onError: (error) => toast.error(`Failed to create card: ${error.message}`),
-    })
- )
-    
-}
+      onError: (error) => toast.error(`Failed to create card: ${error.message}`),
+    }),
+  );
+};
 
-
-export const useReviewCard=()=>{
-      const trpc = useTRPC();
+export const useReviewCard = () => {
+  const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   return useMutation(
     trpc.cards.review.mutationOptions({
-         onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: trpc.cards.getDueCards.queryKey() });
-        queryClient.invalidateQueries({ queryKey: trpc.cards.getStats.queryKey() });
+      onSuccess: () => {
+        queryClient.invalidateQueries(trpc.cards.getDueCards.pathFilter());
+        queryClient.invalidateQueries(trpc.cards.getStats.pathFilter());
       },
       onError: (error) => toast.error(`Failed to save review: ${error.message}`),
-    })
-  )
-}
+    }),
+  );
+};
 
-
-export const useCardStats = ()=>{
-const trpc = useTRPC()
-return useQuery (
-    trpc.cards.getStats.queryOptions(undefined,{staleTime:30_000})
-)
-}
-
+export const useCardStats = () => {
+  const trpc = useTRPC();
+  return useQuery(trpc.cards.getStats.queryOptions(undefined, { staleTime: 30_000 }));
+};
 
 export const useDeleteCard = () => {
   const trpc = useTRPC();
@@ -72,30 +65,26 @@ export const useDeleteCard = () => {
   return useMutation(
     trpc.cards.remove.mutationOptions({
       onMutate: async ({ id }) => {
-        // Stop any in-flight refetch so it doesn't clobber our optimistic edit
-        await queryClient.cancelQueries({ queryKey: trpc.cards.getMany.queryKey() });
+        const filter = trpc.cards.getMany.pathFilter();
 
-        const previous = queryClient.getQueriesData({ queryKey: trpc.cards.getMany.queryKey() });
+        await queryClient.cancelQueries(filter);
 
-        // Remove the card from every cached getMany page immediately
-        queryClient.setQueriesData(
-          { queryKey: trpc.cards.getMany.queryKey() },
-          (old: any) => {
-            if (!old?.pages) return old;
-            return {
-              ...old,
-              pages: old.pages.map((page: any) => ({
-                ...page,
-                cards: page.cards.filter((c: any) => c.id !== id),
-              })),
-            };
-          },
-        );
+        const previous = queryClient.getQueriesData(filter);
 
-        return { previous }; // saved for rollback on error
+        queryClient.setQueriesData(filter, (old: any) => {
+          if (!old?.pages) return old;
+          return {
+            ...old,
+            pages: old.pages.map((page: any) => ({
+              ...page,
+              cards: page.cards.filter((c: any) => c.id !== id),
+            })),
+          };
+        });
+
+        return { previous };
       },
       onError: (error, _vars, context) => {
-        // Roll back if the server actually rejected it
         context?.previous?.forEach(([key, data]) => queryClient.setQueryData(key, data));
         toast.error(`Failed to delete card: ${error.message}`);
       },
@@ -103,9 +92,8 @@ export const useDeleteCard = () => {
         toast.success("Card deleted");
       },
       onSettled: () => {
-        // Reconcile with the real server state regardless of outcome
-        queryClient.invalidateQueries({ queryKey: trpc.cards.getMany.queryKey() });
-        queryClient.invalidateQueries({ queryKey: trpc.cards.getStats.queryKey() });
+        queryClient.invalidateQueries(trpc.cards.getMany.pathFilter());
+        queryClient.invalidateQueries(trpc.cards.getStats.pathFilter());
       },
     }),
   );

@@ -68,11 +68,12 @@ export const CardsList = () => {
                 </div>
               </div>
               <Button
+              className="cursor-pointer"
                 variant="ghost"
                 size="icon"
                 onClick={() => deleteCard.mutate({ id: card.id })}
               >
-                <Trash2 className="size-4 text-destructive" />
+                <Trash2 className="size-4 text-destructive cursor-pointer" />
               </Button>
             </div>
           ))}

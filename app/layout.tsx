@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -20,6 +20,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DevCards",
   description: "A spaced-repetition tracker for things you learn while coding",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "DevCards",
+  },
+  
+};
+export const viewport: Viewport = {
+  themeColor: "#000000",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -49,11 +49,13 @@ export const NotesList = () => {
                   {note.filePath}
                 </p>
                 <button
+                
+                
                   onClick={() => deleteNote.mutate({ id: note.id })}
-                  className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity text-muted-foreground hover:text-rust shrink-0"
+                  className="opacity-0 cursor-pointer  group-hover:opacity-100 focus-visible:opacity-100 transition-opacity text-muted-foreground hover:text-rust shrink-0"
                   aria-label="Delete note"
                 >
-                  <Trash2 className="size-3.5" />
+                  <Trash2 className="size-3.5 text-destructive" />
                 </button>
               </div>
 
