@@ -26,6 +26,11 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "DevCards",
   },
+  icons: {
+    icon: "/icon.png",        // put favicon.png in /public
+    shortcut: "/icon.png",
+    apple: "/apple-touch-icon.png", // optional, for iOS home screen
+  },
   
 };
 export const viewport: Viewport = {

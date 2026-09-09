@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
 type Rating = "AGAIN" | "HARD" | "GOOD" | "EASY";
+type DueCard = ReturnType<typeof useSuspenseDueCards>["data"][number];
 
 const RATING_CONFIG: Record<Rating, { label: string; hint: string; className: string }> = {
   AGAIN: { label: "Again", hint: "<10m",  className: "bg-red-600 hover:bg-red-700 text-white" },
@@ -18,13 +19,18 @@ const RATING_CONFIG: Record<Rating, { label: string; hint: string; className: st
 };
 
 export const ReviewSession = () => {
-  const { data: dueCards } = useSuspenseDueCards();
+  const { data: initialDueCards } = useSuspenseDueCards();
   const reviewCard = useReviewCard();
   const [revealed, setRevealed] = useState(false);
-  const [index, setIndex] = useState(0);
 
-  const total = dueCards.length;
-  const current = dueCards[index];
+  // Snapshot once on mount. Later refetches of getDueCards (triggered by
+  // the review mutation's invalidate) must NOT reshuffle this session —
+  // we manage our own local queue instead.
+  const [queue, setQueue] = useState<DueCard[]>(initialDueCards);
+  const [total] = useState(initialDueCards.length);
+
+  const current = queue[0];
+  const reviewed = total - queue.length;
 
   if (!current) {
     return (
@@ -37,23 +43,36 @@ export const ReviewSession = () => {
   }
 
   const handleRate = (rating: Rating) => {
-    reviewCard.mutate({ cardId: current.id, rating });
+    const cardToReview = current;
+
+    // Optimistic: drop it from the queue immediately so the UI feels instant.
+    setQueue((q) => q.slice(1));
     setRevealed(false);
-    setIndex((i) => i + 1);
+
+    reviewCard.mutate(
+      { cardId: cardToReview.id, rating },
+      {
+        // If the write actually fails, put the card back so it isn't
+        // silently lost from this session (the hook's own onError still
+        // fires the toast).
+        onError: () => {
+          setQueue((q) => [cardToReview, ...q]);
+        },
+      },
+    );
   };
 
   return (
     <div className="max-w-lg mx-auto mt-8 space-y-4 px-4 sm:px-0">
-      {/* Progress: which card is active, out of how many */}
       <div className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
-        <span className="shrink-0">Card {index + 1} of {total}</span>
+        <span className="shrink-0">Card {reviewed + 1} of {total}</span>
         {current.category && (
           <Badge variant="secondary" className="max-w-[50%] truncate">
             {current.category}
           </Badge>
         )}
       </div>
-      <Progress value={(index / total) * 100} className="h-1.5" />
+      <Progress value={(reviewed / total) * 100} className="h-1.5" />
 
       <Card className="min-h-[260px] shadow-sm">
         <CardContent className="flex flex-col items-center justify-center text-center gap-5 p-8 sm:p-10 min-h-[260px]">

@@ -24,6 +24,7 @@ import { useIsMobile } from "@/lib/hooks/use-mobile"; // <- your existing hook, 
 import { useChatCard } from "../hooks/use-cards";
 import { Send, Sparkles, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ChatMarkdown } from "./chat_markdown";
 
 type CardData = {
   id: string;
@@ -132,20 +133,20 @@ const CardChatBody = ({ card }: { card: CardData }) => {
               </div>
             )}
 
-            {messages.map((m, i) => (
-              <div key={i} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-                <div
-                  className={cn(
-                    "rounded-2xl px-4 py-2 max-w-[85%] text-sm whitespace-pre-wrap break-words",
-                    m.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-sm"
-                      : "bg-muted rounded-bl-sm",
-                  )}
-                >
-                  {m.content}
-                </div>
-              </div>
-            ))}
+          {messages.map((m, i) => (
+  <div key={i} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
+    <div
+      className={cn(
+        "rounded-2xl px-4 py-2 max-w-[85%] text-sm break-words",
+        m.role === "user"
+          ? "bg-primary text-primary-foreground rounded-br-sm"
+          : "bg-muted rounded-bl-sm",
+      )}
+    >
+      <ChatMarkdown content={m.content} isUser={m.role === "user"} />
+    </div>
+  </div>
+))}
 
             {isPending && (
               <div className="flex justify-start">

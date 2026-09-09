@@ -1,8 +1,10 @@
 {
+  "id": "/",
   "name": "DevCards",
   "short_name": "DevCards",
   "description": "A spaced-repetition tracker for things you learn while coding",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
