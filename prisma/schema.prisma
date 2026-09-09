@@ -1,0 +1,88 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../lib/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  cards        Card[]
+  reviews      Review[]
+  projectNotes ProjectNote[]
+}
+
+
+model Card {
+    id           String   @id @default(cuid())
+    userId       String
+    front        String
+    back         String
+    category     String?
+    tags         String[] @default([])
+    easeFactor   Float    @default(2.5)
+    intervalDays Int      @default(0)
+    repetitions  Int      @default(0)
+    dueAt        DateTime @default(now())
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    reviews      Review[]
+
+    @@index([userId, dueAt])
+    @@index([userId, category])
+    @@map("card")
+}
+
+model Review {
+  id           String       @id @default(cuid())
+  cardId       String
+  userId       String
+  rating       ReviewRating
+  intervalDays Int
+  reviewedAt   DateTime     @default(now())
+
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, reviewedAt])
+  @@index([cardId, reviewedAt])
+  @@map("review")
+}
+
+model ProjectNote {
+  id         String  @id @default(cuid())
+  userId     String
+  filePath   String            // e.g. "features/cards/server/router.ts"
+  title      String            // short human label, e.g. "Card review mutation"
+  reasoning  String            // WHY you built it this way — the actual learning artifact
+  codeSnippet String?          // optional: paste the relevant chunk of code
+  tags       String[] @default([])  // e.g. ["prisma", "pagination", "trpc"]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, filePath])
+  @@index([userId, createdAt(sort: Desc)])
+  @@map("project_note")
+}
+
+
+
+
+
+
+enum ReviewRating {
+  AGAIN
+  HARD
+  GOOD
+  EASY
+}
