@@ -8,11 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Trash2 } from "lucide-react";
+import { CardDetailDialog } from "./card_detail_dialog";
 
 export const CardsList = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const debouncedSearch = useDebounce(search, 400);
+
+  const [selectedCard, setSelectedCard] = useState<any>(null);
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useCardsList({ search: debouncedSearch, category });
@@ -53,7 +56,8 @@ export const CardsList = () => {
           {cards.map((card) => (
             <div
               key={card.id}
-              className="flex items-start justify-between rounded-lg border p-4"
+              onClick={() => setSelectedCard(card)}
+              className="flex items-start justify-between rounded-lg border p-4 cursor-pointer hover:bg-muted/50 transition-colors"
             >
               <div className="space-y-1">
                 <p className="font-medium">{card.front}</p>
@@ -68,10 +72,13 @@ export const CardsList = () => {
                 </div>
               </div>
               <Button
-              className="cursor-pointer"
+                className="cursor-pointer"
                 variant="ghost"
                 size="icon"
-                onClick={() => deleteCard.mutate({ id: card.id })}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteCard.mutate({ id: card.id });
+                }}
               >
                 <Trash2 className="size-4 text-destructive cursor-pointer" />
               </Button>
@@ -90,6 +97,12 @@ export const CardsList = () => {
           {isFetchingNextPage ? "Loading..." : "Load more"}
         </Button>
       )}
+
+      <CardDetailDialog
+        card={selectedCard}
+        open={!!selectedCard}
+        onOpenChange={(open) => !open && setSelectedCard(null)}
+      />
     </div>
   );
 };

@@ -2,7 +2,10 @@
 
 import { useTRPC } from "@/trpc/client";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { toast } from "sonner";
+
+export type ChatMessage = { role: "user" | "assistant"; content: string };
 
 export const useSuspenseDueCards = () => {
   const trpc = useTRPC();
@@ -98,3 +101,41 @@ export const useDeleteCard = () => {
     }),
   );
 };
+
+
+export const useChatCard =(cardId:string)=>{
+  const trpc = useTRPC();
+  const [messages,setMessages] = useState<ChatMessage[]>([])
+
+  const askCard = useMutation(
+    trpc.cards.askCard.mutationOptions({
+      onError: (error) => toast.error(`Assistant error: ${error.message}`),
+    })
+  )
+
+
+  const sendMessage = async (question:string) =>{
+    const trimmed = question.trim();
+    if(!trimmed) return;
+
+
+    const history = messages.slice(-10);
+    setMessages((prev) => [...prev, { role: "user", content: trimmed }]);
+
+
+    try {
+      const { answer } = await askCard.mutateAsync({ cardId, question: trimmed, history });
+      setMessages((prev) => [...prev, { role: "assistant", content: answer }]);
+    } catch {
+      // error already toasted
+    }
+  };
+
+  const reset = ()=> setMessages([]);
+
+  return { messages, sendMessage, isPending: askCard.isPending, reset };
+
+
+  }
+
+
