@@ -10,7 +10,7 @@ const CardsPage = async () => {
   return (
     <>
       <SiteNav />
-      <main className="max-w-7xl mx-auto px-4 py-8">
+     <main className="max-w-7xl mx-auto px-4 py-8 pb-[calc(3.5rem+env(safe-area-inset-bottom)+1.5rem)] sm:pb-8">
         <div className="flex pb-6 items-center justify-between">
           <h1 className="text-2xl font-bold">All cards</h1>
           <ApiKeyDialog />

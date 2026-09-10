@@ -12,10 +12,20 @@ type Rating = "AGAIN" | "HARD" | "GOOD" | "EASY";
 type DueCard = ReturnType<typeof useSuspenseDueCards>["data"][number];
 
 const RATING_CONFIG: Record<Rating, { label: string; hint: string; className: string }> = {
-  AGAIN: { label: "Again", hint: "<10m",  className: "bg-red-600 hover:bg-red-700 text-white" },
-  HARD:  { label: "Hard",  hint: "1d",    className: "bg-orange-500 hover:bg-orange-600 text-white" },
-  GOOD:  { label: "Good",  hint: "3d",    className: "bg-blue-600 hover:bg-blue-700 text-white" },
-  EASY:  { label: "Easy",  hint: "6d",    className: "bg-green-600 hover:bg-green-700 text-white" },
+  AGAIN: { label: "Again", hint: "<10m", className: "bg-red-600 hover:bg-red-700 text-white" },
+  HARD: { label: "Hard", hint: "1d", className: "bg-orange-500 hover:bg-orange-600 text-white" },
+  GOOD: { label: "Good", hint: "3d", className: "bg-blue-600 hover:bg-blue-700 text-white" },
+  EASY: { label: "Easy", hint: "6d", className: "bg-green-600 hover:bg-green-700 text-white" },
+};
+
+// Scales text size down as content length grows, so a long answer
+// shrinks to fit instead of blowing up the card's layout.
+const getTextSizeClass = (text: string) => {
+  const len = text.length;
+  if (len > 220) return "text-sm";
+  if (len > 140) return "text-base";
+  if (len > 70) return "text-lg";
+  return "text-xl";
 };
 
 export const ReviewSession = () => {
@@ -62,10 +72,15 @@ export const ReviewSession = () => {
     );
   };
 
+  const frontSizeClass = getTextSizeClass(current.front);
+  const backSizeClass = getTextSizeClass(current.back);
+
   return (
     <div className="max-w-lg mx-auto mt-8 space-y-4 px-4 sm:px-0">
       <div className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
-        <span className="shrink-0">Card {reviewed + 1} of {total}</span>
+        <span className="shrink-0">
+          Card {reviewed + 1} of {total}
+        </span>
         {current.category && (
           <Badge variant="secondary" className="max-w-[50%] truncate">
             {current.category}
@@ -74,20 +89,26 @@ export const ReviewSession = () => {
       </div>
       <Progress value={(reviewed / total) * 100} className="h-1.5" />
 
-      <Card className="min-h-[260px] shadow-sm">
-        <CardContent className="flex flex-col items-center justify-center text-center gap-5 p-8 sm:p-10 min-h-[260px]">
+      <Card className="shadow-sm">
+        <CardContent
+          className={cn(
+            "flex flex-col items-center text-center gap-5 p-8 sm:p-10",
+            "min-h-[260px] max-h-[55vh] overflow-y-auto",
+            revealed ? "justify-start" : "justify-center"
+          )}
+        >
           <p
             className={cn(
-              "text-xl font-medium transition-colors",
-              revealed && "text-muted-foreground text-base font-normal"
+              "font-medium break-words transition-colors",
+              revealed ? "text-muted-foreground font-normal text-base" : frontSizeClass
             )}
           >
             {current.front}
           </p>
           {revealed && (
             <>
-              <div className="w-full border-t" />
-              <p className="text-xl font-semibold">{current.back}</p>
+              <div className="w-full border-t shrink-0" />
+              <p className={cn("font-semibold break-words", backSizeClass)}>{current.back}</p>
             </>
           )}
         </CardContent>

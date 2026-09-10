@@ -9,7 +9,7 @@ const DiaryPage = async () => {
   return (
     <>
       <SiteNav />
-      <main className="max-w-7xl mx-auto px-6 py-10 space-y-8">
+      <main className="max-w-7xl mx-auto px-6 py-10 pb-[calc(3.5rem+env(safe-area-inset-bottom)+1.5rem)] sm:pb-10 space-y-8">
         <div className="flex items-baseline justify-between">
           <div>
             <h1 className="text-2xl font-bold">Diary</h1>

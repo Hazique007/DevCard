@@ -15,7 +15,7 @@ const HomePage = async () => {
   return (
     <HydrateClient>
       <SiteNav />
-      <main className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+    <main className="max-w-7xl mx-auto px-4 py-8 pb-[calc(3.5rem+env(safe-area-inset-bottom)+1.5rem)] sm:pb-8 space-y-8">
         <StatsDashboard />
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           <Suspense fallback={<Skeleton className="h-64 w-full max-w-md mx-auto" />}>
