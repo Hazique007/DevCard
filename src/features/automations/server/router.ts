@@ -5,13 +5,16 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { z } from "zod";
 
 export const automationsRouter = createTRPCRouter({
-  createConnection: protectedProcedure
-    .input(z.object({ name: z.string().min(1), webhookUrl: z.string().url(), webhookSecret: z.string().optional() }))
-    .mutation(async ({ ctx, input }) => {
-      return prisma.automationConnection.create({
-        data: { userId: ctx.userId, ...input },
-      });
-    }),
+ 
+createConnection: protectedProcedure
+  .input(z.object({ name: z.string().min(1), webhookUrl: z.string().url(), webhookSecret: z.string().optional() }))
+  .mutation(async ({ ctx, input }) => {
+    return prisma.automationConnection.upsert({
+      where: { userId_name: { userId: ctx.userId, name: input.name } },
+      create: { userId: ctx.userId, ...input },
+      update: { webhookUrl: input.webhookUrl, webhookSecret: input.webhookSecret },
+    });
+  }),
 
   listConnections: protectedProcedure.query(async ({ ctx }) => {
     return prisma.automationConnection.findMany({
