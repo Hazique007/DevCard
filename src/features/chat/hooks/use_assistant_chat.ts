@@ -53,24 +53,28 @@ export const useAssistantChat = () => {
     },
   });
 
-  useEffect(() => {
-    if (!run) return;
+ useEffect(() => {
+  if (!run) return;
 
-    if (run.status === "DONE") {
-      const answer = "```json\n" + JSON.stringify(run.resultPayload, null, 2) + "\n```";
-      setMessages((prev) => [...prev, { role: "assistant", content: answer }]);
-      setLastExchange((prev) => (prev ? { ...prev, answer } : null));
-      setPendingRunId(null);
-    }
+  if (run.status === "DONE") {
+    const payload = run.resultPayload as { answer?: string } | null;
+    const answer =
+      payload?.answer ??
+      "```json\n" + JSON.stringify(run.resultPayload, null, 2) + "\n```";
 
-    if (run.status === "FAILED") {
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: `⚠️ Automation failed: ${run.error ?? "unknown error"}` },
-      ]);
-      setPendingRunId(null);
-    }
-  }, [run?.status]);
+    setMessages((prev) => [...prev, { role: "assistant", content: answer }]);
+    setLastExchange((prev) => (prev ? { ...prev, answer } : null));
+    setPendingRunId(null);
+  }
+
+  if (run.status === "FAILED") {
+    setMessages((prev) => [
+      ...prev,
+      { role: "assistant", content: `⚠️ Automation failed: ${run.error ?? "unknown error"}` },
+    ]);
+    setPendingRunId(null);
+  }
+}, [run?.status]);
 
   // ── Regular AI chat ──────────────────────────────────────────────────
   const sendMessage = async (question: string) => {
