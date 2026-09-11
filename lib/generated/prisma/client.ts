@@ -59,3 +59,13 @@ export type Review = Prisma.ReviewModel
  * 
  */
 export type ProjectNote = Prisma.ProjectNoteModel
+/**
+ * Model AutomationConnection
+ * 
+ */
+export type AutomationConnection = Prisma.AutomationConnectionModel
+/**
+ * Model AutomationRun
+ * 
+ */
+export type AutomationRun = Prisma.AutomationRunModel

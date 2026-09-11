@@ -18,6 +18,7 @@ model User {
   cards        Card[]
   reviews      Review[]
   projectNotes ProjectNote[]
+  automationConnection AutomationConnection[]
 }
 
 
@@ -76,6 +77,48 @@ model ProjectNote {
   @@index([userId, createdAt(sort: Desc)])
   @@map("project_note")
 }
+
+
+model AutomationConnection {
+  id            String   @id @default(cuid())
+  userId        String
+  name          String              // user-chosen label, e.g. "GitHub commit sync"
+  webhookUrl    String              // the autom8ai generic webhook URL, pasted once
+  webhookSecret String?             // optional, for HMAC signing on the way out
+  createdAt     DateTime @default(now())
+
+  user User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  runs AutomationRun[]
+
+  @@unique([userId, name])
+  @@map("automation_connection")
+
+}
+
+model AutomationRun{
+  id             String    @id @default(cuid())
+  connectionId   String
+  status         JobStatus @default(PENDING)
+  requestPayload Json
+  resultPayload  Json?
+  error          String?
+  createdAt      DateTime  @default(now())
+  completedAt    DateTime?
+
+  connection AutomationConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  @@index([connectionId, createdAt(sort: Desc)])
+  @@map("automation_run")
+
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  DONE
+  FAILED
+}
+
 
 
 

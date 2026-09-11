@@ -4,7 +4,10 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { MessageCircle, X, Send, Loader2, Plus } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
 import { useAssistantChat } from "../hooks/use_assistant_chat";
@@ -12,8 +15,18 @@ import { ChatMarkdown } from "@/src/features/cards/ui/chat_markdown";
 
 export const FloatingChatButton = () => {
   const [open, setOpen] = useState(false);
-  const { messages, sendMessage, isPending, lastExchange, createCard, isCreatingCard } = useAssistantChat();
+  const {
+    messages,
+    sendMessage,
+    sendGithubMessage,
+    isPending,
+    lastExchange,
+    createCard,
+    isCreatingCard,
+    hasGithubConnection,
+  } = useAssistantChat();
   const [input, setInput] = useState("");
+  const [askGithub, setAskGithub] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -40,7 +53,11 @@ export const FloatingChatButton = () => {
 
   const handleSend = () => {
     if (!input.trim() || isPending) return;
-    sendMessage(input);
+    if (askGithub) {
+      sendGithubMessage(input);
+    } else {
+      sendMessage(input);
+    }
     setInput("");
   };
 
@@ -67,20 +84,24 @@ export const FloatingChatButton = () => {
           ref={panelRef}
           className={cn(
             "fixed rounded-xl border bg-background shadow-2xl flex flex-col z-50 overflow-hidden",
-            // Mobile: near-fullscreen, small margin on all sides, stops above the bottom nav
             "inset-4 bottom-[calc(3.5rem+env(safe-area-inset-bottom)+1rem)]",
-            // Desktop: back to the compact floating panel
             "sm:inset-auto sm:top-auto sm:left-auto sm:bottom-24 sm:right-6 sm:w-[min(380px,calc(100vw-2rem))] sm:h-[500px] sm:max-h-[70vh]"
           )}
         >
           <div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
-            <p className="font-medium text-sm">Ask DevCards</p>
+            <div>
+
+                <p className="font-medium text-sm">Ask DevCards</p>
+           
+
+            </div>
+          
             <div className="flex items-center gap-2">
               <Button
                 size="sm"
                 variant="outline"
                 className="h-7 gap-1 text-xs"
-                disabled={!lastExchange || isCreatingCard}
+                disabled={!lastExchange || !lastExchange.answer || isCreatingCard}
                 onClick={() => lastExchange && createCard(lastExchange)}
               >
                 {isCreatingCard ? <Loader2 className="size-3 animate-spin" /> : <Plus className="size-3" />}
@@ -132,13 +153,31 @@ export const FloatingChatButton = () => {
             </div>
           </ScrollArea>
 
-          <div className="p-3 border-t shrink-0">
+          <div className="px-3 pt-2 flex items-center gap-2 shrink-0">
+  <button
+    type="button"
+    onClick={() => hasGithubConnection && setAskGithub((v) => !v)}
+    disabled={!hasGithubConnection}
+    className={cn(
+      "flex items-center gap-1.5 text-xs rounded-md px-2 py-1 transition-colors",
+      askGithub
+        ? "text-foreground font-medium bg-muted"
+        : "text-muted-foreground hover:text-foreground",
+      !hasGithubConnection && "opacity-50 cursor-not-allowed hover:text-muted-foreground"
+    )}
+  >
+    <FaGithub className={cn("size-3.5", askGithub ? "text-foreground" : "text-muted-foreground")} />
+    {hasGithubConnection ? "Ask GitHub" : "Ask GitHub (add a connection in Settings)"}
+  </button>
+</div>
+
+          <div className="p-3 pt-2 border-t shrink-0">
             <div className="flex items-end gap-2">
               <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask anything..."
+                placeholder={askGithub ? "Ask about your repo..." : "Ask anything..."}
                 rows={1}
                 className="min-h-10 max-h-32 resize-none"
               />

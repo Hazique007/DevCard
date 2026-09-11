@@ -193,6 +193,7 @@ export type UserWhereInput = {
   cards?: Prisma.CardListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   projectNotes?: Prisma.ProjectNoteListRelationFilter
+  automationConnection?: Prisma.AutomationConnectionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -205,6 +206,7 @@ export type UserOrderByWithRelationInput = {
   cards?: Prisma.CardOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
   projectNotes?: Prisma.ProjectNoteOrderByRelationAggregateInput
+  automationConnection?: Prisma.AutomationConnectionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -220,6 +222,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   cards?: Prisma.CardListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   projectNotes?: Prisma.ProjectNoteListRelationFilter
+  automationConnection?: Prisma.AutomationConnectionListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -256,6 +259,7 @@ export type UserCreateInput = {
   cards?: Prisma.CardCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteCreateNestedManyWithoutUserInput
+  automationConnection?: Prisma.AutomationConnectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -268,6 +272,7 @@ export type UserUncheckedCreateInput = {
   cards?: Prisma.CardUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteUncheckedCreateNestedManyWithoutUserInput
+  automationConnection?: Prisma.AutomationConnectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -280,6 +285,7 @@ export type UserUpdateInput = {
   cards?: Prisma.CardUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUpdateManyWithoutUserNestedInput
+  automationConnection?: Prisma.AutomationConnectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -292,6 +298,7 @@ export type UserUncheckedUpdateInput = {
   cards?: Prisma.CardUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUncheckedUpdateManyWithoutUserNestedInput
+  automationConnection?: Prisma.AutomationConnectionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -407,6 +414,20 @@ export type UserUpdateOneRequiredWithoutProjectNotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectNotesInput, Prisma.UserUpdateWithoutProjectNotesInput>, Prisma.UserUncheckedUpdateWithoutProjectNotesInput>
 }
 
+export type UserCreateNestedOneWithoutAutomationConnectionInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAutomationConnectionInput, Prisma.UserUncheckedCreateWithoutAutomationConnectionInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAutomationConnectionInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAutomationConnectionNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAutomationConnectionInput, Prisma.UserUncheckedCreateWithoutAutomationConnectionInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAutomationConnectionInput
+  upsert?: Prisma.UserUpsertWithoutAutomationConnectionInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAutomationConnectionInput, Prisma.UserUpdateWithoutAutomationConnectionInput>, Prisma.UserUncheckedUpdateWithoutAutomationConnectionInput>
+}
+
 export type UserCreateWithoutCardsInput = {
   id?: string
   email: string
@@ -416,6 +437,7 @@ export type UserCreateWithoutCardsInput = {
   groqApiKey?: string | null
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteCreateNestedManyWithoutUserInput
+  automationConnection?: Prisma.AutomationConnectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCardsInput = {
@@ -427,6 +449,7 @@ export type UserUncheckedCreateWithoutCardsInput = {
   groqApiKey?: string | null
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteUncheckedCreateNestedManyWithoutUserInput
+  automationConnection?: Prisma.AutomationConnectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCardsInput = {
@@ -454,6 +477,7 @@ export type UserUpdateWithoutCardsInput = {
   groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUpdateManyWithoutUserNestedInput
+  automationConnection?: Prisma.AutomationConnectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCardsInput = {
@@ -465,6 +489,7 @@ export type UserUncheckedUpdateWithoutCardsInput = {
   groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUncheckedUpdateManyWithoutUserNestedInput
+  automationConnection?: Prisma.AutomationConnectionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
@@ -476,6 +501,7 @@ export type UserCreateWithoutReviewsInput = {
   groqApiKey?: string | null
   cards?: Prisma.CardCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteCreateNestedManyWithoutUserInput
+  automationConnection?: Prisma.AutomationConnectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -487,6 +513,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   groqApiKey?: string | null
   cards?: Prisma.CardUncheckedCreateNestedManyWithoutUserInput
   projectNotes?: Prisma.ProjectNoteUncheckedCreateNestedManyWithoutUserInput
+  automationConnection?: Prisma.AutomationConnectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -514,6 +541,7 @@ export type UserUpdateWithoutReviewsInput = {
   groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUpdateManyWithoutUserNestedInput
+  automationConnection?: Prisma.AutomationConnectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -525,6 +553,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUncheckedUpdateManyWithoutUserNestedInput
   projectNotes?: Prisma.ProjectNoteUncheckedUpdateManyWithoutUserNestedInput
+  automationConnection?: Prisma.AutomationConnectionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProjectNotesInput = {
@@ -536,6 +565,7 @@ export type UserCreateWithoutProjectNotesInput = {
   groqApiKey?: string | null
   cards?: Prisma.CardCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  automationConnection?: Prisma.AutomationConnectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProjectNotesInput = {
@@ -547,6 +577,7 @@ export type UserUncheckedCreateWithoutProjectNotesInput = {
   groqApiKey?: string | null
   cards?: Prisma.CardUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  automationConnection?: Prisma.AutomationConnectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProjectNotesInput = {
@@ -574,6 +605,7 @@ export type UserUpdateWithoutProjectNotesInput = {
   groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  automationConnection?: Prisma.AutomationConnectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectNotesInput = {
@@ -585,6 +617,71 @@ export type UserUncheckedUpdateWithoutProjectNotesInput = {
   groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cards?: Prisma.CardUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  automationConnection?: Prisma.AutomationConnectionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAutomationConnectionInput = {
+  id?: string
+  email: string
+  name: string
+  createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
+  cards?: Prisma.CardCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  projectNotes?: Prisma.ProjectNoteCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAutomationConnectionInput = {
+  id?: string
+  email: string
+  name: string
+  createdAt?: Date | string
+  passwordHash?: string | null
+  groqApiKey?: string | null
+  cards?: Prisma.CardUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  projectNotes?: Prisma.ProjectNoteUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAutomationConnectionInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAutomationConnectionInput, Prisma.UserUncheckedCreateWithoutAutomationConnectionInput>
+}
+
+export type UserUpsertWithoutAutomationConnectionInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAutomationConnectionInput, Prisma.UserUncheckedUpdateWithoutAutomationConnectionInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAutomationConnectionInput, Prisma.UserUncheckedCreateWithoutAutomationConnectionInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAutomationConnectionInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAutomationConnectionInput, Prisma.UserUncheckedUpdateWithoutAutomationConnectionInput>
+}
+
+export type UserUpdateWithoutAutomationConnectionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cards?: Prisma.CardUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  projectNotes?: Prisma.ProjectNoteUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAutomationConnectionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cards?: Prisma.CardUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  projectNotes?: Prisma.ProjectNoteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -596,12 +693,14 @@ export type UserCountOutputType = {
   cards: number
   reviews: number
   projectNotes: number
+  automationConnection: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cards?: boolean | UserCountOutputTypeCountCardsArgs
   reviews?: boolean | UserCountOutputTypeCountReviewsArgs
   projectNotes?: boolean | UserCountOutputTypeCountProjectNotesArgs
+  automationConnection?: boolean | UserCountOutputTypeCountAutomationConnectionArgs
 }
 
 /**
@@ -635,6 +734,13 @@ export type UserCountOutputTypeCountProjectNotesArgs<ExtArgs extends runtime.Typ
   where?: Prisma.ProjectNoteWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAutomationConnectionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AutomationConnectionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -646,6 +752,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   cards?: boolean | Prisma.User$cardsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   projectNotes?: boolean | Prisma.User$projectNotesArgs<ExtArgs>
+  automationConnection?: boolean | Prisma.User$automationConnectionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -681,6 +788,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   cards?: boolean | Prisma.User$cardsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   projectNotes?: boolean | Prisma.User$projectNotesArgs<ExtArgs>
+  automationConnection?: boolean | Prisma.User$automationConnectionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -692,6 +800,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     cards: Prisma.$CardPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
     projectNotes: Prisma.$ProjectNotePayload<ExtArgs>[]
+    automationConnection: Prisma.$AutomationConnectionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1097,6 +1206,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   cards<T extends Prisma.User$cardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   projectNotes<T extends Prisma.User$projectNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  automationConnection<T extends Prisma.User$automationConnectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$automationConnectionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1589,6 +1699,30 @@ export type User$projectNotesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ProjectNoteScalarFieldEnum | Prisma.ProjectNoteScalarFieldEnum[]
+}
+
+/**
+ * User.automationConnection
+ */
+export type User$automationConnectionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AutomationConnection
+   */
+  select?: Prisma.AutomationConnectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AutomationConnection
+   */
+  omit?: Prisma.AutomationConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AutomationConnectionInclude<ExtArgs> | null
+  where?: Prisma.AutomationConnectionWhereInput
+  orderBy?: Prisma.AutomationConnectionOrderByWithRelationInput | Prisma.AutomationConnectionOrderByWithRelationInput[]
+  cursor?: Prisma.AutomationConnectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AutomationConnectionScalarFieldEnum | Prisma.AutomationConnectionScalarFieldEnum[]
 }
 
 /**

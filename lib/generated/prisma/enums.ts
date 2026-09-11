@@ -9,6 +9,16 @@
 * 🟢 You can import this file directly.
 */
 
+export const JobStatus = {
+  PENDING: 'PENDING',
+  RUNNING: 'RUNNING',
+  DONE: 'DONE',
+  FAILED: 'FAILED'
+} as const
+
+export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
+
+
 export const ReviewRating = {
   AGAIN: 'AGAIN',
   HARD: 'HARD',
